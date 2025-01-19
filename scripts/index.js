@@ -1,7 +1,7 @@
 
 // @todo: DOM узлы
 // Контейнер для карточек
-const placesList = document.querySelector('.places__list');
+const placesContainer = document.querySelector('.places__list');
 
 // @todo: Функция создания карточки
 function createCard(cardData, handleDeleteCard) {
@@ -24,12 +24,15 @@ function createCard(cardData, handleDeleteCard) {
     return cardElement;
 }
 
+// @todo: Функция удаления карточки
+function deleteCard(cardElement) {
+    cardElement.remove(); // Удаляем карточку из DOM
+}
+
 // @todo: Функция добавления карточки на страницу
 function addCardToPage(cardData) {
-    const cardElement = createCard(cardData, (cardElement) => {
-        cardElement.remove(); // Удаляем карточку из DOM
-    });
-    placesList.append(cardElement); // Добавляем карточку в список
+    const cardElement = createCard(cardData, deleteCard);
+    placesContainer.append(cardElement); // Добавляем карточку в список
 }
 
 // @todo: Вывести карточки на страницу
