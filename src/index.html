@@ -32,7 +32,9 @@
       © 2021 Mesto Russia
     </p>
   </footer>
-  <div class="popup popup_type_edit">
+
+  <!-- Попап редактирования профиля -->
+  <div class="popup popup_type_edit popup_is-animated">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
@@ -43,7 +45,9 @@
       </form>
     </div>
   </div>
-  <div class="popup popup_type_new-card">
+
+  <!-- Попап добавления новой карточки -->
+  <div class="popup popup_type_new-card popup_is-animated">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
@@ -54,7 +58,9 @@
       </form>
     </div>
   </div>
-  <div class="popup popup_type_image">
+
+  <!-- Попап с изображением -->
+  <div class="popup popup_type_image popup_is-animated">
     <div class="popup__content popup__content_content_image">
       <button type="button" class="popup__close"></button>
       <img src="" alt="" class="popup__image">
@@ -62,17 +68,17 @@
     </div>
   </div>
 </div>
-
 <template id="card-template">
   <li class="places__item card">
     <img class="card__image" src="" alt="" />
     <button type="button" class="card__delete-button"></button>
     <div class="card__description">
-      <h2 class="card__title">
-      </h2>
+      <h2 class="card__title"></h2>
       <button type="button" class="card__like-button"></button>
     </div>
   </li>
 </template>
+
 </body>
 </html>
+

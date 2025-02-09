@@ -8,11 +8,8 @@ function handleEscape(evt) {
 // Ф-ия открытия модального окна
 function openModal(modalElement) {
     if (!modalElement) return; // Защита от ошибок
-    modalElement.classList.add('popup_is-animated');
 
-    setTimeout(() => {
-        modalElement.classList.add('popup_is-opened');
-    }, 1);
+    modalElement.classList.add('popup_is-opened'); // добавляем класс открытия
 
     document.addEventListener('keydown', handleEscape);
 }
@@ -20,13 +17,10 @@ function openModal(modalElement) {
 // Ф-ия закрытия модального окна
 function closeModal(modalElement) {
     if (!modalElement) return; // Защита от ошибок
+
     modalElement.classList.remove('popup_is-opened');
 
-    modalElement.addEventListener('transitionend', function handler() {
-        modalElement.classList.remove('popup_is-animated');
-        modalElement.removeEventListener('transitionend', handler);
-    });
-
+    // Не удаляем класс 'popup_is-animated', чтобы анимация продолжала работать
     document.removeEventListener('keydown', handleEscape);
 }
 

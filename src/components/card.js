@@ -1,6 +1,6 @@
 // Функция создания карточки
-function createCard(item, openModal, closeModal, handleImageClick) {
-    const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');  // Получаем темплейт карточки
+function createCard(item, handleImageClick) {
+    const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
     const card = cardTemplate.cloneNode(true);
     const cardImage = card.querySelector('.card__image');
     const cardDescription = card.querySelector('.card__description');
@@ -14,7 +14,7 @@ function createCard(item, openModal, closeModal, handleImageClick) {
     cardImage.alt = item.name;
 
     // Обработчики событий
-    cardImage.addEventListener('click', () => handleImageClick(cardImage, cardTitle, openModal));
+    cardImage.addEventListener('click', () => handleImageClick(cardImage, cardTitle));
     cardDeleteButton.addEventListener('click', () => deleteCard(card));
     cardLikeButton.addEventListener('click', toggleLike);
 

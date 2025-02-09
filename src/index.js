@@ -67,7 +67,7 @@ popups.forEach((popup) => {
 
 // Ф-ия добавления карточки на страницу
 function addCardToPage(item, method = 'prepend') {
-    const cardElement = createCard(item, openModal, closeModal, handleImageClick, popupImage);
+    const cardElement = createCard(item, handleImageClick);
     placesList[method](cardElement);
 }
 
@@ -96,5 +96,6 @@ function handleImageClick(image, title) {
     imageCaption.textContent = title.textContent;
     openModal(popupImage);
 }
+
 
 
