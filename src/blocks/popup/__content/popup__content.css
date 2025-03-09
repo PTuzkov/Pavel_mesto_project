@@ -1,12 +1,16 @@
 .popup__content {
+  position: relative;
+  box-sizing: border-box;
+  background-color: #fff;
   max-width: 430px;
   width: 100%;
   min-height: 330px;
-  background-color: #fff;
   border-radius: 10px;
-  position: relative;
-  box-sizing: border-box;
   padding: 34px 36px;
+}
+
+.popup__content-edit-avatar {
+  min-height: 272px;
 }
 
 @media screen and (max-width: 568px) {

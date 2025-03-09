@@ -1,7 +1,33 @@
 .card__description {
-  display: flex;
-  justify-content: space-between;
+  --spacing-top: 24px;
+  --spacing-sides: 20px;
+  --spacing-bottom: 19px;
+  --gap: 4px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: var(--spacing-top) var(--spacing-sides) var(--spacing-bottom);
+  gap: var(--gap);
   align-items: center;
   background: #fff;
-  padding: 25px 20px;
+}
+
+@media (max-width: 768px) {
+  .card__description {
+    grid-template-columns: 1fr;
+  }
+}
+
+span.number-of-likes {
+  font-weight: 400;
+  font-size: 13px;
+  text-align: center;
+  color: black;
+  justify-self: end;
+  padding-right: 7px;
+  transition: color 0.2s ease;
+}
+
+span.number-of-likes:hover {
+  color: #555;
 }
