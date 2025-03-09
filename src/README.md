@@ -1,4 +1,4 @@
 # Проектная работа Mesto
 
-https://github.com/PTuzkov/mesto-project-ff
+https://github.com/PTuzkov/Pavel_mesto_project
 
