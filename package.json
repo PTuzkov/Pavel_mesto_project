@@ -4,8 +4,9 @@
   "description": "Learning platform",
   "main": "index.js",
   "scripts": {
-    "build": "if exist dist rmdir /s /q dist && webpack --mode production",
-    "dev": "webpack serve --open"
+    "start": "webpack serve --open",
+    "build": "if exist dist rmdir /s /q dist && webpack --mode production --progress",
+    "dev": "webpack serve --mode development --open"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,7 @@
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
-    "core-js": "^3.40.0",
+    "core-js": "^3.41.0",
     "dotenv": "^16.4.7",
     "jquery": "^3.7.1"
   }
