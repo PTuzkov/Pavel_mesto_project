@@ -1,3 +1,5 @@
+// card.js
+
 // Функция создания карточки: создает DOM-элемент карточки на основе данных и добавляет обработчики событий
 export function createCard(card, currentUserId, removeCard, likeTheCard, viewingCard) {
     // Проверяем, что данные карточки корректны (имя, ссылка, лайки, владелец)
@@ -76,4 +78,34 @@ export function checkStatusLike(likes, currentUserId) {
     if (!Array.isArray(likes) || !currentUserId) return false;
     // Проверяем, есть ли в массиве лайков пользователь с ID текущего пользователя
     return !!likes.find((user) => user._id === currentUserId); // Возвращаем true, если лайк есть
+}
+
+// Функция обработки лайка: отправляет запрос на сервер для добавления или удаления лайка
+export function handleLike(api, cardItem, cardId, currentUserId) {
+    // Получаем текущие лайки из dataset карточки, с проверкой на пустое значение
+    const likes = JSON.parse(cardItem.dataset.likes || '[]');
+    // Проверяем, лайкнул ли текущий пользователь карточку
+    const isLiked = checkStatusLike(likes, currentUserId);
+
+    // Выбираем метод API в зависимости от текущего состояния лайка
+    const apiMethod = isLiked ? api.deleteLikeFromCard(cardId) : api.putLikeToCard(cardId);
+
+    return apiMethod
+        .then((res) => {
+            // Обновляем состояние лайков на карточке после успешного запроса
+            changeLike(res.likes, cardItem, currentUserId);
+            // Обновляем dataset.likes новыми данными с сервера
+            cardItem.dataset.likes = JSON.stringify(res.likes);
+        })
+        .catch((err) => console.error('Ошибка обработки лайка:', err));
+}
+
+// Функция обработки удаления: отправляет запрос на сервер для удаления карточки
+export function handleDelete(api, cardItem, cardId) {
+    return api.deleteCardsFromServer(cardId)
+        .then(() => {
+            // Удаляем карточку из DOM после успешного удаления на сервере
+            deleteCard(cardItem);
+        })
+        .catch((err) => console.error('Ошибка удаления карточки:', err));
 }

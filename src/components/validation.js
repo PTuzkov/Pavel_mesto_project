@@ -1,17 +1,6 @@
-// Конфигурация валидации: содержит классы и селекторы для работы с формами
-export const validationConfig = {
-    popupForm: '.popup__form',
-    popupInput: '.popup__input',
-    popupButton: '.popup__button',
-    popupButtonDisabled: 'popup__button_disabled',
-    popupInputError: 'popup__input_type_error',
-    popupErrorVisible: 'popup__error_visible'
-};
-
-// Показ ошибки ввода: добавляет сообщение об ошибке и стили для невалидного поля
-const showInputError = (formElement, inputElement, errorMessage) => {
+// Показ ошибки ввода
+const showInputError = (formElement, inputElement, errorMessage, validationConfig) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    // Проверяем, существует ли errorElement, чтобы избежать ошибок
     if (errorElement) {
         inputElement.classList.add(validationConfig.popupInputError);
         errorElement.textContent = errorMessage;
@@ -21,10 +10,9 @@ const showInputError = (formElement, inputElement, errorMessage) => {
     }
 };
 
-// Скрытие ошибки ввода: убирает сообщение об ошибке и стили для поля
-const hideInputError = (formElement, inputElement) => {
+// Скрытие ошибки ввода
+const hideInputError = (formElement, inputElement, validationConfig) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    // Проверяем, существует ли errorElement
     if (errorElement) {
         inputElement.classList.remove(validationConfig.popupInputError);
         errorElement.classList.remove(validationConfig.popupErrorVisible);
@@ -32,68 +20,62 @@ const hideInputError = (formElement, inputElement) => {
     }
 };
 
-// Проверка валидности поля: определяет, валидно ли поле, и показывает/скрывает ошибку
-const checkInputValidity = (formElement, inputElement) => {
-    // Устанавливаем кастомное сообщение для ошибки при несовпадении с паттерном
+// Проверка валидности поля
+const checkInputValidity = (formElement, inputElement, validationConfig) => {
     if (inputElement.validity.patternMismatch) {
-        inputElement.setCustomValidity(inputElement.dataset.errorMessage || ''); // Fallback на пустую строку
+        inputElement.setCustomValidity(inputElement.dataset.errorMessage || '');
     } else {
         inputElement.setCustomValidity('');
     }
 
-    // Показываем или скрываем ошибку в зависимости от валидности
     if (!inputElement.validity.valid) {
-        showInputError(formElement, inputElement, inputElement.validationMessage);
+        showInputError(formElement, inputElement, inputElement.validationMessage, validationConfig);
     } else {
-        hideInputError(formElement, inputElement);
+        hideInputError(formElement, inputElement, validationConfig);
     }
 };
 
-// Установка слушателей событий: добавляет обработчики на поля ввода и управляет кнопкой
-const setEventListeners = (formElement) => {
+// Установка слушателей событий
+const setEventListeners = (formElement, validationConfig) => {
     const inputList = Array.from(formElement.querySelectorAll(validationConfig.popupInput));
     const buttonElement = formElement.querySelector(validationConfig.popupButton);
 
-    // Проверяем, что элементы найдены
     if (!inputList.length || !buttonElement) {
         console.warn('Не найдены поля ввода или кнопка в форме:', formElement);
         return;
     }
 
-    // Изначально устанавливаем состояние кнопки
-    toggleButtonState(inputList, buttonElement);
+    toggleButtonState(inputList, buttonElement, validationConfig);
 
-    // Добавляем слушатели на каждое поле ввода
     inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', () => {
-            checkInputValidity(formElement, inputElement);
-            toggleButtonState(inputList, buttonElement);
+            checkInputValidity(formElement, inputElement, validationConfig);
+            toggleButtonState(inputList, buttonElement, validationConfig);
         });
     });
 };
 
-// Включение валидации: активирует валидацию для всех форм на странице
-export const enableValidation = () => {
+// Включение валидации
+export const enableValidation = (validationConfig) => {
     const formList = Array.from(document.querySelectorAll(validationConfig.popupForm));
 
-    // Проверяем, найдены ли формы
     if (!formList.length) {
         console.warn('Формы с классом', validationConfig.popupForm, 'не найдены');
         return;
     }
 
     formList.forEach((formElement) => {
-        setEventListeners(formElement);
+        setEventListeners(formElement, validationConfig);
     });
 };
 
-// Проверка наличия невалидных полей: возвращает true, если хотя бы одно поле невалидно
+// Проверка наличия невалидных полей
 const hasInvalidInput = (inputList) => {
     return inputList.some((inputElement) => !inputElement.validity.valid);
 };
 
-// Переключение состояния кнопки: активирует/деактивирует кнопку в зависимости от валидности
-const toggleButtonState = (inputList, buttonElement) => {
+// Переключение состояния кнопки
+const toggleButtonState = (inputList, buttonElement, validationConfig) => {
     if (hasInvalidInput(inputList)) {
         buttonElement.disabled = true;
         buttonElement.classList.add(validationConfig.popupButtonDisabled);
@@ -103,20 +85,19 @@ const toggleButtonState = (inputList, buttonElement) => {
     }
 };
 
-// Очистка валидации: скрывает ошибки и обновляет состояние кнопки
+// Очистка валидации
 export const clearValidation = (formElement, validationConfig) => {
     const inputList = Array.from(formElement.querySelectorAll(validationConfig.popupInput));
     const buttonElement = formElement.querySelector(validationConfig.popupButton);
 
-    // Проверяем, что элементы найдены
     if (!inputList.length || !buttonElement) {
         console.warn('Не найдены поля ввода или кнопка для очистки валидации:', formElement);
         return;
     }
 
     inputList.forEach((inputElement) => {
-        hideInputError(formElement, inputElement);
+        hideInputError(formElement, inputElement, validationConfig);
     });
 
-    toggleButtonState(inputList, buttonElement);
+    toggleButtonState(inputList, buttonElement, validationConfig);
 };
