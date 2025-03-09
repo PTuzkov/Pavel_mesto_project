@@ -1,23 +1,24 @@
 {
-  "name": "mesto-project-ff",
+  "name": "Pavel_mesto_project",
   "version": "0.0.1",
   "description": "Learning platform",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --open",
-    "build": "if exist dist rmdir /s /q dist && webpack --mode production --progress",
-    "dev": "webpack serve --mode development --open"
+    "build": "webpack --mode production",
+    "dev": "webpack serve",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PTuzkov/mesto-project-ff.git"
+    "url": "git+https://github.com/PTuzkov/Pavel_mesto_project.git"
   },
-  "author": "",
+  "author": "Pavel Tuzkov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/PTuzkov/mesto-project-ff/issues"
+    "url": "https://github.com/PTuzkov/Pavel_mesto_project/issues"
   },
-  "homepage": "https://github.com/PTuzkov/mesto-project-ff#readme",
+  "homepage": "https://github.com/PTuzkov/Pavel_mesto_project#readme",
   "devDependencies": {
     "@babel/core": "^7.26.8",
     "@babel/preset-env": "^7.26.8",
@@ -30,6 +31,7 @@
     "html-webpack-plugin": "^5.6.3",
     "mini-css-extract-plugin": "^2.9.2",
     "postcss-loader": "^8.1.1",
+    "gh-pages": "^6.3.0",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.0"
